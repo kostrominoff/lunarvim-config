@@ -26,9 +26,9 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-
 lvim.builtin.treesitter.auto_install = true
 
+vim.diagnostic.config({ update_in_insert = true })
 
 lvim.plugins = {
   { "catppuccin/nvim" },
@@ -37,7 +37,9 @@ lvim.plugins = {
     "kyazdani42/nvim-tree.lua",
     config = function()
       require("nvim-tree").setup({
-        update_root = false
+        update_focused_file = {
+          update_root = false
+        }
       })
     end
   },
