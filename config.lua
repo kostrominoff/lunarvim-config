@@ -16,6 +16,8 @@ lvim.keys.normal_mode["<leader>o"] = ":NvimTreeFocus<CR>"
 lvim.keys.normal_mode["|"] = ":vsplit<CR>"
 lvim.keys.normal_mode["\\"] = ":split<CR>"
 lvim.builtin.terminal.open_mapping = [[<F7>]]
+lvim.keys.normal_mode["<leader>q"] = "<cmd>confirm q<cr>"
+lvim.keys.normal_mode["x"] = '"_x'
 
 lvim.colorscheme = "catppuccin"
 
@@ -38,5 +40,5 @@ lvim.plugins = {
         update_root = false
       })
     end
-  }
+  },
 }
