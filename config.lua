@@ -4,13 +4,13 @@ require("lvim.lsp.manager").setup("tsserver")
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { command = "eslint", filetypes = { "typescript", "typescriptreact" } }
+  -- { command = "eslint", filetypes = { "typescript", "typescriptreact" } }
 }
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   {
-    command = "prettier",
+    command = "prettierd",
     filetypes = { "typescript", "typescriptreact" },
   },
   {
