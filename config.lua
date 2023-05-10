@@ -1,23 +1,54 @@
 require("lvim.lsp.manager").setup("emmet_ls")
 require("lvim.lsp.manager").setup("tailwindcss")
-require("lvim.lsp.manager").setup("tsserver")
 
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
-  -- { command = "eslint", filetypes = { "typescript", "typescriptreact" } }
+require("typescript").setup({})
+
+local wk_ok, wk = pcall(require, "which-key")
+if not wk_ok then
+  return
+end
+
+
+local typescriptMappings = {
+  t = {
+    name = "Typescript",
+    i = { "<cmd>TypescriptAddMissingImports<Cr>", "AddMissingImports" },
+    o = { "<cmd>TypescriptOrganizeImports<cr>", "OrganizeImports" },
+    u = { "<cmd>TypescriptRemoveUnused<Cr>", "RemoveUnused" },
+    r = { "<cmd>TypescriptRenameFile<Cr>", "RenameFile" },
+    f = { "<cmd>TypescriptFixAll<Cr>", "FixAll" },
+    g = { "<cmd>TypescriptGoToSourceDefinition<Cr>", "GoToSourceDefinition" },
+  }
 }
+wk.register(typescriptMappings, lvim.builtin.which_key.opts)
 
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
+require("lvim.lsp.null-ls.code_actions").setup({
+  sources = {
+    require("typescript.extensions.null-ls.code-actions")
+  }
+})
+
+require("lvim.lsp.null-ls.linters").setup({
+  { command = "eslint" },
+  { command = "eslint_d" }
+})
+
+require("lvim.lsp.null-ls.formatters").setup({
+  -- {
+  --   command = "prettierd",
+  -- },
   {
-    command = "prettierd",
-    filetypes = { "typescript", "typescriptreact" },
+    command = "eslint"
+  },
+  {
+    command = "eslint_d"
   },
   {
     command = "rustywind",
     filetypes = { "typescriptreact" }
   }
-}
+})
+
 
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -72,8 +103,16 @@ lvim.builtin.alpha.dashboard.section.header.val = {
 }
 
 lvim.plugins = {
-  { "catppuccin/nvim" },
+  {
+    "catppuccin/nvim",
+    config = function()
+      require("catppuccin").setup({
+        transparent_background = true
+      })
+    end
+  },
   { "andweeb/presence.nvim" },
+  { "jose-elias-alvarez/typescript.nvim" },
   {
     "kyazdani42/nvim-tree.lua",
     config = function()
